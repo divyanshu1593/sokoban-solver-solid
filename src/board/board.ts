@@ -3,11 +3,11 @@ import { DisplayService } from './types/display-service.interface';
 
 export class Board {
   constructor(
-    private readonly initState: BlockType[][],
+    private readonly state: BlockType[][],
     private readonly display: DisplayService,
   ) {}
 
   show() {
-    this.display.show(this.initState);
+    this.display.show(this.state);
   }
 }
