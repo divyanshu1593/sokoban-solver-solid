@@ -1,13 +1,20 @@
 import { BlockType } from './types/block-type.enum';
 import { DisplayService } from './types/display-service.interface';
+import { MoveDir } from './types/move-direction.enum';
+import { MoveService } from './types/move-service.interface';
 
 export class Board {
   constructor(
     private readonly state: BlockType[][],
-    private readonly display: DisplayService,
+    private readonly displayService: DisplayService,
+    private readonly moveService: MoveService,
   ) {}
 
   show() {
-    this.display.show(this.state);
+    this.displayService.show(this.state);
+  }
+
+  move(moveDir: MoveDir) {
+    return this.moveService.move(this.state, moveDir);
   }
 }
