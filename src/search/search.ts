@@ -71,12 +71,14 @@ export class Search implements SearchService {
       this.moveService.move(stateClone, move.dir);
       movesMadeClone.push(move.dir);
 
-      return this.breadthFirstSearch(
+      const result = this.breadthFirstSearch(
         stateClone,
         movesMadeClone,
         visitedState,
         ...heuristicsWithWeights,
       );
+
+      if (result) return result;
     }
     return null;
   }
