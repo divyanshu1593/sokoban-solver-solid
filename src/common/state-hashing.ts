@@ -1,4 +1,4 @@
-import { BlockType } from 'src/board/types/block-type.enum';
+import { BlockType } from '../board/types/block-type.enum';
 import { StateHashingService } from './types/state-hashing-service.interface';
 
 export class StateHashing implements StateHashingService {

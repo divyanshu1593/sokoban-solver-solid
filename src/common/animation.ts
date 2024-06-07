@@ -1,8 +1,8 @@
-import { BlockType } from 'src/board/types/block-type.enum';
-import { MoveDir } from 'src/board/types/move-direction.enum';
+import { BlockType } from '../board/types/block-type.enum';
+import { MoveDir } from '../board/types/move-direction.enum';
 import { AnimationService } from './types/animation-service.interface';
-import { DisplayService } from 'src/board/types/display-service.interface';
-import { MoveService } from 'src/board/types/move-service.interface';
+import { DisplayService } from '../board/types/display-service.interface';
+import { MoveService } from '../board/types/move-service.interface';
 
 export class Animation implements AnimationService {
   constructor(

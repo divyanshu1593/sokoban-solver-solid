@@ -1,11 +1,11 @@
-import { BlockType } from 'src/board/types/block-type.enum';
+import { BlockType } from '../board/types/block-type.enum';
 import { SearchService } from './types/search-service.interface';
-import { MoveDir } from 'src/board/types/move-direction.enum';
-import { StateEvaluationService } from 'src/board/types/state-evaluation-service.interface';
+import { MoveDir } from '../board/types/move-direction.enum';
+import { StateEvaluationService } from '../board/types/state-evaluation-service.interface';
 import { HeuristicEvaluationService } from './types/heuristic-evaluation-service.interface';
-import { StateHashingService } from 'src/common/types/state-hashing-service.interface';
+import { StateHashingService } from '../common/types/state-hashing-service.interface';
 import { MoveInfo } from './types/move-info.type';
-import { MoveService } from 'src/board/types/move-service.interface';
+import { MoveService } from '../board/types/move-service.interface';
 import { Heuristic } from './heuristic';
 
 export class Search implements SearchService {

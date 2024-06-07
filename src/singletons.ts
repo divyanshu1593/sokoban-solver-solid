@@ -8,11 +8,12 @@ import { BoxAverageDistanceHeuristic } from './search/box-average-distance-heuri
 import { HeuristicEvaluation } from './search/heuristic-evaluation';
 import { SameDirectionHeuristic } from './search/same-direction-heuristic';
 import { Search } from './search/search';
+import { Animation } from './common/animation';
 
 export const displayInstance = new Display();
-export const animationInstance = new Animation();
 export const stateEvaluationInstance = new StateEvaluation();
 export const moveInstance = new Move(stateEvaluationInstance);
+export const animationInstance = new Animation(displayInstance, moveInstance);
 export const boxAtValidPlaceHeuristicInstance = new BoxAtValidPlaceHeuristic();
 export const awayFromEmptyBoxHeuristicsInstance =
   new AwayFromEmptyBoxHeuristics();

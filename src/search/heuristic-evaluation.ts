@@ -1,15 +1,15 @@
 import { Heuristic } from './heuristic';
 import { HeuristicEvaluationService } from './types/heuristic-evaluation-service.interface';
-import { BlockType } from 'src/board/types/block-type.enum';
+import { BlockType } from '../board/types/block-type.enum';
 import {
   BoxPositions,
   HeuristicDetails,
   ValidPositions,
 } from './types/heuristic-details';
 import { StateHistory } from './types/state-history.type';
-import { StateEvaluationService } from 'src/board/types/state-evaluation-service.interface';
-import { MoveService } from 'src/board/types/move-service.interface';
-import { MoveDir } from 'src/board/types/move-direction.enum';
+import { StateEvaluationService } from '../board/types/state-evaluation-service.interface';
+import { MoveService } from '../board/types/move-service.interface';
+import { MoveDir } from '../board/types/move-direction.enum';
 
 export class HeuristicEvaluation implements HeuristicEvaluationService {
   constructor(
