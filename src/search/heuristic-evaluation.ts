@@ -7,8 +7,16 @@ import {
   ValidPositions,
 } from './types/heuristic-details';
 import { StateHistory } from './types/state-history.type';
+import { StateEvaluationService } from 'src/board/types/state-evaluation-service.interface';
+import { MoveService } from 'src/board/types/move-service.interface';
+import { MoveDir } from 'src/board/types/move-direction.enum';
 
 export class HeuristicEvaluation implements HeuristicEvaluationService {
+  constructor(
+    private readonly stateEvaluationService: StateEvaluationService,
+    private readonly moveService: MoveService,
+  ) {}
+
   evaluate(
     stateHistory: StateHistory,
     ...heuristicsWithWeights: [Heuristic, number][]
@@ -24,7 +32,7 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
   }
 
   private deriveAllDetails(stateHistory: StateHistory): HeuristicDetails {
-    const { currentState } = stateHistory;
+    const { currentState, movesHistory } = stateHistory;
     let numberOfBoxAtPosition = 0;
     const boxPositions: BoxPositions = [];
     const validPositions: ValidPositions = [];
@@ -43,6 +51,27 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
       }
     }
 
+    const isCurrentlyAdjacentToEmptyBox =
+      this.isAdjacentToEmptyBox(currentState);
+
+    let previousState = null;
+    if (movesHistory.length) {
+      previousState = structuredClone(currentState);
+      if (movesHistory.at(-1) == MoveDir.UP) {
+        this.moveService.move(previousState, MoveDir.DOWN);
+      } else if (movesHistory.at(-1) == MoveDir.LEFT) {
+        this.moveService.move(previousState, MoveDir.RIGHT);
+      } else if (movesHistory.at(-1) == MoveDir.RIGHT) {
+        this.moveService.move(previousState, MoveDir.LEFT);
+      } else if (movesHistory.at(-1) == MoveDir.DOWN) {
+        this.moveService.move(previousState, MoveDir.UP);
+      }
+    }
+
+    const isPreviouslyAdjacentToEmptyBox = previousState
+      ? this.isAdjacentToEmptyBox(previousState)
+      : false;
+
     return {
       numberOfBoxAtPosition,
       totalNumberOfBoxes: boxPositions.length,
@@ -50,6 +79,25 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
       validPositions,
       numberOfRows: currentState.length,
       numberOfColumns: currentState[0].length,
+      isCurrentlyAdjacentToEmptyBox,
+      isPreviouslyAdjacentToEmptyBox,
     };
+  }
+
+  private isAdjacentToEmptyBox(state: BlockType[][]) {
+    const playerPos = this.stateEvaluationService.findPlayerPosition(state);
+    if (
+      state[playerPos.i + 1][playerPos.j] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i][playerPos.j + 1] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i - 1][playerPos.j] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i][playerPos.j - 1] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i - 1][playerPos.j - 1] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i - 1][playerPos.j + 1] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i + 1][playerPos.j - 1] == BlockType.BOX_AT_EMPTY_SPACE ||
+      state[playerPos.i + 1][playerPos.j + 1] == BlockType.BOX_AT_EMPTY_SPACE
+    ) {
+      return true;
+    }
+    return false;
   }
 }

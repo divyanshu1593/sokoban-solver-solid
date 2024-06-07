@@ -4,6 +4,8 @@ export type BoxPositions = [number, number][];
 export type ValidPositions = [number, number][];
 export type NumberOfRows = number;
 export type NumberOfColumns = number;
+export type IsCurrentlyAdjacentToEmptyBox = boolean;
+export type IsPreviouslyAdjacentToEmptyBox = boolean;
 
 export type HeuristicDetails = {
   numberOfBoxAtPosition: NumberOfBoxAtPosition;
@@ -12,4 +14,6 @@ export type HeuristicDetails = {
   validPositions: ValidPositions;
   numberOfRows: NumberOfRows;
   numberOfColumns: NumberOfColumns;
+  isCurrentlyAdjacentToEmptyBox: IsCurrentlyAdjacentToEmptyBox;
+  isPreviouslyAdjacentToEmptyBox: IsPreviouslyAdjacentToEmptyBox;
 };
