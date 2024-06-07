@@ -5,7 +5,7 @@ import { MoveService } from './types/move-service.interface';
 
 export class Board {
   constructor(
-    private readonly state: BlockType[][],
+    readonly state: BlockType[][],
     private readonly displayService: DisplayService,
     private readonly moveService: MoveService,
   ) {}
