@@ -72,6 +72,9 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
       ? this.isAdjacentToEmptyBox(previousState)
       : false;
 
+    const isInSameDir =
+      movesHistory.length >= 2 && movesHistory.at(-1) === movesHistory.at(-2);
+
     return {
       numberOfBoxAtPosition,
       totalNumberOfBoxes: boxPositions.length,
@@ -81,6 +84,7 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
       numberOfColumns: currentState[0].length,
       isCurrentlyAdjacentToEmptyBox,
       isPreviouslyAdjacentToEmptyBox,
+      isInSameDir,
     };
   }
 

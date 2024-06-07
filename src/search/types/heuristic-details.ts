@@ -6,6 +6,7 @@ export type NumberOfRows = number;
 export type NumberOfColumns = number;
 export type IsCurrentlyAdjacentToEmptyBox = boolean;
 export type IsPreviouslyAdjacentToEmptyBox = boolean;
+export type IsInSameDir = boolean;
 
 export type HeuristicDetails = {
   numberOfBoxAtPosition: NumberOfBoxAtPosition;
@@ -16,4 +17,5 @@ export type HeuristicDetails = {
   numberOfColumns: NumberOfColumns;
   isCurrentlyAdjacentToEmptyBox: IsCurrentlyAdjacentToEmptyBox;
   isPreviouslyAdjacentToEmptyBox: IsPreviouslyAdjacentToEmptyBox;
+  isInSameDir: IsInSameDir;
 };
