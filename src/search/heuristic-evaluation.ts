@@ -1,7 +1,11 @@
 import { Heuristic } from './heuristic';
 import { HeuristicEvaluationService } from './types/heuristic-evaluation-service.interface';
 import { BlockType } from 'src/board/types/block-type.enum';
-import { HeuristicDetails } from './types/heuristic-details';
+import {
+  BoxPositions,
+  HeuristicDetails,
+  ValidPositions,
+} from './types/heuristic-details';
 import { StateHistory } from './types/state-history.type';
 
 export class HeuristicEvaluation implements HeuristicEvaluationService {
@@ -22,8 +26,8 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
   private deriveAllDetails(stateHistory: StateHistory): HeuristicDetails {
     const { currentState } = stateHistory;
     let numberOfBoxAtPosition = 0;
-    const boxPositions = [];
-    const validPositions = [];
+    const boxPositions: BoxPositions = [];
+    const validPositions: ValidPositions = [];
 
     for (let i = 0; i < currentState.length; i++) {
       for (let j = 0; j < currentState[0].length; j++) {
@@ -42,6 +46,10 @@ export class HeuristicEvaluation implements HeuristicEvaluationService {
     return {
       numberOfBoxAtPosition,
       totalNumberOfBoxes: boxPositions.length,
+      boxPositions,
+      validPositions,
+      numberOfRows: currentState.length,
+      numberOfColumns: currentState[0].length,
     };
   }
 }
