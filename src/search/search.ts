@@ -6,8 +6,7 @@ import { HeuristicEvaluationService } from './types/heuristic-evaluation-service
 import { StateHashingService } from 'src/common/types/state-hashing-service.interface';
 import { MoveInfo } from './types/move-info.type';
 import { MoveService } from 'src/board/types/move-service.interface';
-import { BoxAtValidPlaceHeuristic } from './box-at-valid-place-heuristic';
-import { Weights } from './types/weights.type';
+import { Heuristic } from './heuristic';
 
 export class Search implements SearchService {
   constructor(
@@ -15,13 +14,18 @@ export class Search implements SearchService {
     private readonly heuristicEvaluationService: HeuristicEvaluationService,
     private readonly stateHashingService: StateHashingService,
     private readonly moveService: MoveService,
-    private readonly boxAtValidPlaceHeuristic: BoxAtValidPlaceHeuristic,
   ) {}
 
-  search(state: BlockType[][]) {
-    const result = this.breadthFirstSearch(state, [], new Set(), {
-      boxAtValidPlaceWeight: 32,
-    });
+  search(
+    state: BlockType[][],
+    ...heuristicsWithWeights: [Heuristic, number][]
+  ) {
+    const result = this.breadthFirstSearch(
+      state,
+      [],
+      new Set(),
+      ...heuristicsWithWeights,
+    );
 
     if (result) return result;
     throw new Error('No possible solution were found');
@@ -31,9 +35,8 @@ export class Search implements SearchService {
     state: BlockType[][],
     movesMade: MoveDir[],
     visitedState: Set<string>,
-    weights: Weights,
+    ...heuristicsWithWeights: [Heuristic, number][]
   ): MoveDir[] | null {
-    const { boxAtValidPlaceWeight } = weights;
     if (this.stateEvaluationService.isFinalState(state)) return movesMade;
     if (this.stateEvaluationService.isDeadState(state)) return null;
 
@@ -53,7 +56,7 @@ export class Search implements SearchService {
               currentState: stateClone,
               movesHistory: movesMade,
             },
-            [this.boxAtValidPlaceHeuristic, boxAtValidPlaceWeight],
+            ...heuristicsWithWeights,
           ),
         });
       }
@@ -72,7 +75,7 @@ export class Search implements SearchService {
         stateClone,
         movesMadeClone,
         visitedState,
-        weights,
+        ...heuristicsWithWeights,
       );
     }
     return null;
