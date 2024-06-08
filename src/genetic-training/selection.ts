@@ -1,10 +1,14 @@
 import { Levels } from '../common/types/levels.type';
 import { SearchService } from '../search/types/search-service.interface';
+import { ComparisonService } from './types/comparison-service.interface';
 import { Individual } from './types/individual.type';
 import { SelectionService } from './types/selection-service.interface';
 
 export class Selection implements SelectionService {
-  constructor(private readonly searchService: SearchService) {}
+  constructor(
+    private readonly searchService: SearchService,
+    private readonly comparisonService: ComparisonService,
+  ) {}
 
   select(population: Individual[], levels: Levels) {
     if (population.length % 2 !== 0)
@@ -18,7 +22,7 @@ export class Selection implements SelectionService {
     );
 
     const sortedPopulationWithCost = populationWithCost.sort((a, b) =>
-      this.compareCosts(a[1], b[1]),
+      this.comparisonService.compareCosts(a[1], b[1]),
     );
 
     return {
@@ -42,24 +46,5 @@ export class Selection implements SelectionService {
     }
 
     return costArr;
-  }
-
-  private compareCosts(costArr1: number[], costArr2: number[]): -1 | 0 | 1 {
-    if (costArr1.length !== costArr2.length)
-      throw new Error('length of cost arrays must be equal');
-    let cnt1 = 0;
-    let cnt2 = 0;
-
-    for (let i = 0; i < costArr1.length; i++) {
-      if (costArr1[i] > costArr2[i]) {
-        cnt1++;
-      } else if (costArr2[i] > costArr1[i]) {
-        cnt2++;
-      }
-    }
-
-    if (cnt1 > cnt2) return 1;
-    if (cnt1 === cnt2) return 0;
-    return -1;
   }
 }
