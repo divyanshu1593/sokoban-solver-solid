@@ -2,6 +2,7 @@ import { UUID, randomUUID } from 'crypto';
 import { GeneticTrainingRepositoryInterface } from './types/genetic-training-repository.interface';
 import { Individual } from './types/individual.type';
 import * as fs from 'fs/promises';
+import * as path from 'path';
 
 export class GeneticTrainingRepository
   implements GeneticTrainingRepositoryInterface
@@ -26,7 +27,7 @@ export class GeneticTrainingRepository
       : randomUUID();
 
     await fs.appendFile(
-      `trainingData-${currentSessionId}.txt`,
+      path.resolve('./trainingData', `trainingData-${currentSessionId}.txt`),
       `Round number: ${roundNumber}
       Population: ${JSON.stringify(population)}
       Current best Individuals: ${JSON.stringify(currentBestIndividual)}
