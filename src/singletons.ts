@@ -12,6 +12,7 @@ import { Animation } from './common/animation';
 import { Recombination } from './genetic-training/recombination';
 import { Selection } from './genetic-training/selection';
 import { Mutation } from './genetic-training/mutation';
+import { GeneticTrainingRepository } from './genetic-training/genetic-training.repository';
 
 export const displayInstance = new Display();
 export const stateEvaluationInstance = new StateEvaluation();
@@ -37,3 +38,5 @@ export const searchInstance = new Search(
 export const selectionInstance = new Selection(searchInstance);
 export const recombinationInstance = new Recombination();
 export const mutationInstance = new Mutation();
+export const geneticTrainingRepositoryInstance =
+  new GeneticTrainingRepository();
