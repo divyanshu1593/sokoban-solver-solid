@@ -26,8 +26,10 @@ export class GeneticTrainingRepository
       ? trainingSessionId
       : randomUUID();
 
+    const trainingFolder = path.resolve('./trainingData');
+    await this.makeDirectoryIfDoesNotExists(trainingFolder);
     await fs.appendFile(
-      path.resolve('./trainingData', `trainingData-${currentSessionId}.txt`),
+      path.resolve(trainingFolder, `trainingData-${currentSessionId}.txt`),
       `Round number: ${roundNumber}
       Population: ${JSON.stringify(population)}
       Current best Individuals: ${JSON.stringify(currentBestIndividual)}
@@ -37,5 +39,13 @@ export class GeneticTrainingRepository
     );
 
     return currentSessionId;
+  }
+
+  private async makeDirectoryIfDoesNotExists(path: string) {
+    try {
+      await fs.mkdir(path);
+    } catch (err) {
+      if (err.code != 'EEXIST') throw err;
+    }
   }
 }
