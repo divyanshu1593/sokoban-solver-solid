@@ -9,7 +9,8 @@ import { HeuristicEvaluation } from './search/heuristic-evaluation';
 import { SameDirectionHeuristic } from './search/same-direction-heuristic';
 import { Search } from './search/search';
 import { Animation } from './common/animation';
-import { Selection } from './genetic-traning/selection';
+import { Recombination } from './genetic-training/recombination';
+import { Selection } from './genetic-training/selection';
 
 export const displayInstance = new Display();
 export const stateEvaluationInstance = new StateEvaluation();
@@ -33,3 +34,4 @@ export const searchInstance = new Search(
   moveInstance,
 );
 export const selectionInstance = new Selection(searchInstance);
+export const recombinationInstance = new Recombination();
