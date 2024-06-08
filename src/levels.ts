@@ -1,6 +1,6 @@
-import { BlockType } from './board/types/block-type.enum';
+import { Levels } from './common/types/levels.type';
 
-export const levels: Record<string, BlockType[][]> = {
+export const levels: Levels = {
   level1: [
     [0, 0, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 4, 1, 0, 0, 0],
