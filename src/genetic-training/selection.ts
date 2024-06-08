@@ -26,6 +26,7 @@ export class Selection implements SelectionService {
         .slice(0, population.length / 2)
         .map((IndividualWithCost) => IndividualWithCost[0]),
       bestIndividual: sortedPopulationWithCost[0][0],
+      bestCost: sortedPopulationWithCost[0][1],
     };
   }
 

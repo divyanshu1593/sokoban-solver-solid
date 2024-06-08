@@ -8,5 +8,6 @@ export interface SelectionService {
   ) => {
     selectedIndividuals: Individual[];
     bestIndividual: Individual;
+    bestCost: number[];
   };
 }
