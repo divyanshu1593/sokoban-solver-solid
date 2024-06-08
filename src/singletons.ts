@@ -14,6 +14,7 @@ import { Selection } from './genetic-training/selection';
 import { Mutation } from './genetic-training/mutation';
 import { GeneticTrainingRepository } from './genetic-training/genetic-training.repository';
 import { Comparison } from './genetic-training/comparison';
+import { GeneticTraining } from './genetic-training/genetic-training';
 
 export const displayInstance = new Display();
 export const stateEvaluationInstance = new StateEvaluation();
@@ -45,3 +46,10 @@ export const recombinationInstance = new Recombination();
 export const mutationInstance = new Mutation();
 export const geneticTrainingRepositoryInstance =
   new GeneticTrainingRepository();
+export const geneticTrainingInstance = new GeneticTraining(
+  selectionInstance,
+  recombinationInstance,
+  mutationInstance,
+  geneticTrainingRepositoryInstance,
+  comparisonInstance,
+);
