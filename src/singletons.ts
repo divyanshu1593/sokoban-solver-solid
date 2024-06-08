@@ -9,6 +9,7 @@ import { HeuristicEvaluation } from './search/heuristic-evaluation';
 import { SameDirectionHeuristic } from './search/same-direction-heuristic';
 import { Search } from './search/search';
 import { Animation } from './common/animation';
+import { Selection } from './genetic-traning/selection';
 
 export const displayInstance = new Display();
 export const stateEvaluationInstance = new StateEvaluation();
@@ -31,3 +32,4 @@ export const searchInstance = new Search(
   stateHashingInstance,
   moveInstance,
 );
+export const selectionInstance = new Selection(searchInstance);
