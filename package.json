@@ -6,6 +6,7 @@
   },
   "scripts": {
     "start": "tsc && node ./dist/main.js",
+    "train" : "tsc && node ./dist/genetic-training.example.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\""
   },
