@@ -30,7 +30,9 @@ export class GeneticTrainingRepository
       `Round number: ${roundNumber}
       Population: ${JSON.stringify(population)}
       Current best Individuals: ${JSON.stringify(currentBestIndividual)}
-      Current best cost: ${JSON.stringify(currentBestCost)}`,
+      Current best cost: ${JSON.stringify(currentBestCost)}
+      
+      `,
     );
 
     return currentSessionId;
