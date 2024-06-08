@@ -7,13 +7,11 @@ export class Mutation implements MutationService {
     mutationProbability: number,
     maxWeightLimit: number,
   ) {
-    const populationCopy = structuredClone(population);
-
-    for (const individual of populationCopy) {
+    for (const individual of population) {
       this.applyMutation(individual, mutationProbability, maxWeightLimit);
     }
 
-    return populationCopy;
+    return population;
   }
 
   private applyMutation(
