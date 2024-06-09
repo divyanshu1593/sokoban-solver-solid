@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Levels } from '../common/types/levels.type';
 import { ComparisonService } from './types/comparison-service.interface';
 import { GeneticTrainingRepositoryInterface } from './types/genetic-training-repository.interface';
@@ -22,12 +23,16 @@ export class GeneticTraining implements GeneticTrainingService {
     maxWeightsLimit: number,
     mutationProbability: number,
     numberOfRounds: number,
+    logging: boolean = true,
   ) {
     let currentCost = null;
     let currentIndividual = null;
     let currentPopulation = population;
+    const currentSessionId = randomUUID();
 
     for (let i = 0; i < numberOfRounds; i++) {
+      if (logging) console.log(`Round ${i} started`);
+
       const { currentRoundBestCost, currentRoundBestIndividual, population } =
         this.geneticRound(
           currentPopulation,
@@ -36,6 +41,7 @@ export class GeneticTraining implements GeneticTrainingService {
           mutationProbability,
           currentCost,
           currentIndividual,
+          logging,
         );
 
       currentCost = currentRoundBestCost;
@@ -48,6 +54,7 @@ export class GeneticTraining implements GeneticTrainingService {
         currentBestIndividual: currentIndividual as Individual,
         population: currentPopulation,
         roundNumber: i,
+        trainingSessionId: currentSessionId,
       });
     }
   }
@@ -59,23 +66,28 @@ export class GeneticTraining implements GeneticTrainingService {
     mutationProbability: number,
     currentBestCost: number[] | null,
     currentBestIndividual: Individual | null,
+    logging: boolean,
   ) {
+    console.log('selection phase started');
     const { bestCost, bestIndividual, selectedIndividuals } =
       this.selectionService.select(population, levels);
 
-    let currentRoundBestCost = currentBestCost;
-    let currentRoundBestIndividual = currentBestIndividual;
+    let currentRoundBestCost = bestCost;
+    let currentRoundBestIndividual = bestIndividual;
 
     if (currentBestCost) {
       if (
-        this.comparisonService.compareCosts(bestCost, currentBestCost) === 1
+        this.comparisonService.compareCosts(bestCost, currentBestCost) !== 1
       ) {
-        currentRoundBestCost = bestCost;
-        currentRoundBestIndividual = bestIndividual;
+        currentRoundBestCost = currentBestCost;
+        currentRoundBestIndividual = currentBestIndividual as Individual;
       }
     }
 
+    if (logging) console.log('recombination phase started');
     const newGen = this.recombinationService.recombine(selectedIndividuals);
+
+    if (logging) console.log('mutation phase started');
     const mutatedNewGen = this.mutationService.mutate(
       newGen,
       mutationProbability,
