@@ -20,7 +20,6 @@ export class Selection implements SelectionService {
         this.costOfIndividualOnLevels(Individual, levels),
       ],
     );
-    console.log('here');
 
     const sortedPopulationWithCost = populationWithCost.sort((a, b) =>
       this.comparisonService.compareCosts(a[1], b[1]),
@@ -40,15 +39,11 @@ export class Selection implements SelectionService {
     levels: Levels,
   ): number[] {
     const costArr = [];
-    console.log('cont of indi start');
 
-    for (const [name, level] of Object.entries(levels)) {
-      console.log(name);
+    for (const level of Object.values(levels)) {
       const moves = this.searchService.search(level, ...individual);
       costArr.push(moves.length);
     }
-
-    console.log('cost calculated');
 
     return costArr;
   }
