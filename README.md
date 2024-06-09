@@ -5,3 +5,4 @@ This repo is re-implementation of [this](https://github.com/divyanshu1593/sokoba
 Setup:
 - install all packages using "npm i"
 - run using "npm start"
+- run training example using "npm train" (it may take few minutes). training data will be stored in folder named trainingData
