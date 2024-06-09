@@ -32,10 +32,8 @@ export class GeneticTrainingRepository
       path.resolve(trainingFolder, `trainingData-${currentSessionId}.txt`),
       `Round number: ${roundNumber}
       Population: ${JSON.stringify(population)}
-      Current best Individuals: ${JSON.stringify(currentBestIndividual)}
-      Current best cost: ${JSON.stringify(currentBestCost)}
-      
-      `,
+      Current best Individual: ${JSON.stringify(currentBestIndividual)}
+      Current best cost: ${JSON.stringify(currentBestCost)}\n\n`,
     );
 
     return currentSessionId;
