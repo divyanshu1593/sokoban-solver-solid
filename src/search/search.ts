@@ -20,7 +20,7 @@ export class Search implements SearchService {
     state: BlockType[][],
     ...heuristicsWithWeights: [Heuristic, number][]
   ) {
-    const result = this.breadthFirstSearch(
+    const result = this.depthFirstSearch(
       state,
       [],
       new Set(),
@@ -31,7 +31,7 @@ export class Search implements SearchService {
     throw new Error('No possible solution were found');
   }
 
-  private breadthFirstSearch(
+  private depthFirstSearch(
     state: BlockType[][],
     movesMade: MoveDir[],
     visitedState: Set<string>,
@@ -71,7 +71,7 @@ export class Search implements SearchService {
       this.moveService.move(stateClone, move.dir);
       movesMadeClone.push(move.dir);
 
-      const result = this.breadthFirstSearch(
+      const result = this.depthFirstSearch(
         stateClone,
         movesMadeClone,
         visitedState,
